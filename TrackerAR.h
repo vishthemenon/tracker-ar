@@ -25,6 +25,7 @@ class TrackerAR : public Tracker {
   aruco::DetectorParameters markerParams;
 public:
   TrackerAR(CVCalibration& cvl, float arucoSquareDimension);
+  bool detectLandingPad(Mat &frame) override;
   int getPose(Mat& frame, Vec3d& translationVec, Vec3d& rotationVec) override;
 };
 

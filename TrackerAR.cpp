@@ -15,6 +15,7 @@ int TrackerAR::getPose(Mat& frame, Vec3d& tVec, Vec3d& rVec) {
   aruco::detectMarkers(frame, markerDict, markerCorners, markerIds);
   aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distCoeffs, rotationVec,
                                    translationVec);
+  aruco::drawDetectedMarkers(frame, markerCorners, markerIds);
   if(!markerIds.empty() && markerIds[0] <= 4) {
     //    TODO: CHECK FOR MARKER ID MATCH
     tVec = translationVec[0];
@@ -27,3 +28,8 @@ int TrackerAR::getPose(Mat& frame, Vec3d& tVec, Vec3d& rVec) {
 //  imshow("Camera Feed", frame);
   return 0;
 }
+
+bool TrackerAR::detectLandingPad(Mat &frame) {
+  aruco::detectMarkers(frame, markerDict, markerCorners, markerIds);
+  return !markerIds.empty();
+};
